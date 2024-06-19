@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.alura.screenmatch.principal.EjemploStreams;
 import com.alura.screenmatch.principal.Principal;
 
 @SpringBootApplication
@@ -17,10 +16,8 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// Principal principal = new Principal();
-		// principal.muestraMenu();
-		EjemploStreams ejemploStreams = new EjemploStreams();
-		ejemploStreams.muestraEjemplo();
+		Principal principal = new Principal();
+		principal.muestraMenu();
 	}
 
 }
