@@ -53,8 +53,11 @@ public class Principal {
         // Top 5 episodes
         datosEpisodios.stream()
                 .filter(e -> !e.evaluacion().equalsIgnoreCase("N/A"))
+                .peek(e -> System.out.println("Primer filtro (N/A)" + e))
                 .sorted(Comparator.comparing(DatosEpisodio::evaluacion)
                         .reversed())
+                .peek(e -> System.out.println("Segunda ordenación (M > m)" + e))
+                .map(e -> e.titulo().toUpperCase())
                 .limit(5)
                 .forEach(System.out::println);
 
@@ -64,7 +67,7 @@ public class Principal {
                         .map(d -> new Episodio(t.numero(), d)))
                 .collect(Collectors.toList());
 
-        episodios.forEach(System.out::println);
+        // episodios.forEach(System.out::println);
 
         // Busqueda de episodios a partir de cierta fecha
         System.out.println("Buscar año de los episodios:");
@@ -74,12 +77,12 @@ public class Principal {
         LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        episodios.stream()
-                .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
-                .forEach(e -> System.out.println(
-                    "Temporada " + e.getTemporada() +
-                    " Episodio " +e.getTitulo() +
-                    "Fecha de lanzamiento " + e.getFechaDeLanzamiento().format(dtf)
-                ));
+        // episodios.stream()
+        //         .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
+        //         .forEach(e -> System.out.println(
+        //             "Temporada " + e.getTemporada() +
+        //             " Episodio " +e.getTitulo() +
+        //             "Fecha de lanzamiento " + e.getFechaDeLanzamiento().format(dtf)
+        //         ));
     }
 }
