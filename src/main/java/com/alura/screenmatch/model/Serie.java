@@ -2,9 +2,28 @@ package com.alura.screenmatch.model;
 
 import java.util.OptionalDouble;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "series")
 public class Serie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(unique = true)
     private String titulo;
+
+    @Enumerated(EnumType.STRING)
     private Categoria genero;
+    
     private String actores;
     private String sinopsis;
     private String poster;
