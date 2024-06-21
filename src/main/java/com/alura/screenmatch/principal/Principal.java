@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -70,13 +71,13 @@ public class Principal {
         // episodios.forEach(System.out::println);
 
         // Busqueda de episodios a partir de cierta fecha
-        System.out.println("Buscar año de los episodios:");
-        var fecha = teclado.nextInt();
-        teclado.nextLine();
+        // System.out.println("Buscar año de los episodios:");
+        // var fecha = teclado.nextInt();
+        // teclado.nextLine();
 
-        LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
+        // LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         // episodios.stream()
         //         .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
         //         .forEach(e -> System.out.println(
@@ -84,5 +85,19 @@ public class Principal {
         //             " Episodio " +e.getTitulo() +
         //             "Fecha de lanzamiento " + e.getFechaDeLanzamiento().format(dtf)
         //         ));
+
+        // Look for episodes by trimmed title
+        System.out.println("Buscar episodio:");
+        var pedazoTitulo = teclado.nextLine();
+        Optional<Episodio> episodioBuscado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(pedazoTitulo.toUpperCase()))
+                .findFirst();
+
+        if (episodioBuscado.isPresent()) {
+                System.out.println("Episodio encontrado");
+                System.out.println("Los datos son: " + episodioBuscado.get());
+        } else {
+                System.out.println("Episodio no encontrado");
+        }
     }
 }
