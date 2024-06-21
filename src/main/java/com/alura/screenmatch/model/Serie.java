@@ -1,6 +1,7 @@
 package com.alura.screenmatch.model;
 
 import java.util.OptionalDouble;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "series")
@@ -23,12 +25,15 @@ public class Serie {
 
     @Enumerated(EnumType.STRING)
     private Categoria genero;
-    
+
     private String actores;
     private String sinopsis;
     private String poster;
     private Integer totalDeTemporadas;
     private Double evaluacion;
+
+    @Transient
+    private List<Episodio> episodios;
 
     public Serie(DatosSerie datosSerie) {
         this.titulo = datosSerie.titulo();

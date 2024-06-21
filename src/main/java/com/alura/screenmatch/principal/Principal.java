@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import com.alura.screenmatch.model.DatosSerie;
 import com.alura.screenmatch.model.DatosTemporadas;
+import com.alura.screenmatch.model.Serie;
+import com.alura.screenmatch.repository.SerieRepository;
 import com.alura.screenmatch.service.ConsumoAPI;
 import com.alura.screenmatch.service.ConvierteDatos;
 
@@ -16,6 +18,11 @@ public class Principal {
         private final String API_KEY = "&apikey=f876605f";
         private ConvierteDatos conversor = new ConvierteDatos();
         private List<DatosSerie> datosSeries = new ArrayList<>();
+        private SerieRepository repositorio;
+
+        public Principal(SerieRepository repository) {
+            this.repositorio = repository;
+        }
 
         public void muestraMenu() {
                 var opcion = -1;
@@ -74,7 +81,9 @@ public class Principal {
 
         private void buscarSerieWeb() {
                 DatosSerie datos = getDatosSerie();
-                datosSeries.add(datos);
+                // datosSeries.add(datos);
+                Serie serie = new Serie(datos);
+                repositorio.save(serie);
                 System.out.println(datos);
         }
 
