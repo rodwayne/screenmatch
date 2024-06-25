@@ -1,6 +1,7 @@
 package com.alura.screenmatch.principal;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,13 +16,14 @@ public class Principal {
         private Scanner teclado = new Scanner(System.in);
         private ConsumoAPI consumoAPI = new ConsumoAPI();
         private final String URL_BASE = "http://www.omdbapi.com/?t=";
-        private final String API_KEY = "&apikey=f876605f";
+        private final String API_KEY = System.getenv("API_KEY");
+        private String apiUrl = "&apikey=" + API_KEY;
         private ConvierteDatos conversor = new ConvierteDatos();
-        private List<DatosSerie> datosSeries = new ArrayList<>();
         private SerieRepository repositorio;
 
         public Principal(SerieRepository repository) {
-            this.repositorio = repository;
+                this.repositorio = repository;
+                checkApi();
         }
 
         public void muestraMenu() {
@@ -57,10 +59,17 @@ public class Principal {
                 }
         }
 
+        private void checkApi() {
+                // System.out.println(API_KEY);
+                if (API_KEY == null) {
+                        throw new IllegalStateException("Variable de entorno API_KEY no definida");
+                }
+        }
+
         private DatosSerie getDatosSerie() {
                 System.out.println("Buscar serie: ");
                 var nombreSerie = teclado.nextLine();
-                var json = consumoAPI.obtenerDatos(URL_BASE + nombreSerie.replace(" ", "+") + API_KEY);
+                var json = consumoAPI.obtenerDatos(URL_BASE + nombreSerie.replace(" ", "+") + apiUrl);
                 System.out.println(json);
                 DatosSerie datos = conversor.obtenerDatos(json, DatosSerie.class);
                 return datos;
@@ -73,7 +82,7 @@ public class Principal {
                 for (int i = 1; i < datosSerie.totalDeTemporadas(); i++) {
                         var json = consumoAPI
                                         .obtenerDatos(URL_BASE + datosSerie.titulo().replace(" ", "+") + "&Season=" + i
-                                                        + API_KEY);
+                                                        + apiUrl);
                         DatosTemporadas datosTemporadas = conversor.obtenerDatos(json, DatosTemporadas.class);
                         temporadas.add(datosTemporadas);
                 }
@@ -88,6 +97,10 @@ public class Principal {
         }
 
         private void historialDeBusqueda() {
-                datosSeries.forEach(System.out::println);
+                List<Serie> series = repositorio.findAll();
+
+                series.stream()
+                                .sorted(Comparator.comparing(Serie::getGenero))
+                                .forEach(System.out::println);
         }
 }
