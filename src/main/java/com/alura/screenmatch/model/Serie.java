@@ -103,6 +103,14 @@ public class Serie {
         this.evaluacion = evaluacion;
     }
 
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
+    }
+
     @Override
     public String toString() {
         return "titulo=" + titulo + ", genero=" + genero + ", actores=" + actores + ", sinopsis=" + sinopsis
