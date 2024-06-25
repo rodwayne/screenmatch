@@ -74,7 +74,7 @@ public class Principal {
                 System.out.println("Buscar serie: ");
                 var nombreSerie = teclado.nextLine();
                 var json = consumoAPI.obtenerDatos(URL_BASE + nombreSerie.replace(" ", "+") + apiUrl);
-                System.out.println(json);
+                // System.out.println(json);
                 DatosSerie datos = conversor.obtenerDatos(json, DatosSerie.class);
                 return datos;
         }
@@ -99,7 +99,7 @@ public class Principal {
                                 DatosTemporadas datosTemporadas = conversor.obtenerDatos(json, DatosTemporadas.class);
                                 temporadas.add(datosTemporadas);
                         }
-                        temporadas.forEach(System.out::println);
+                        // temporadas.forEach(System.out::println);
                         List<Episodio> episodios = temporadas.stream()
                                         .flatMap(d -> d.episodios().stream()
                                                         .map(e -> new Episodio(d.numero(), e)))
@@ -122,7 +122,7 @@ public class Principal {
                 series = repositorio.findAll();
 
                 series.stream()
-                                .sorted(Comparator.comparing(Serie::getGenero))
-                                .forEach(System.out::println);
+                                .sorted(Comparator.comparing(Serie::getGenero));
+                                // .forEach(System.out::println);
         }
 }

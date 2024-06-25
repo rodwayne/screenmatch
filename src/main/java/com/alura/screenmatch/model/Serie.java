@@ -3,6 +3,7 @@ package com.alura.screenmatch.model;
 import java.util.OptionalDouble;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,7 +33,7 @@ public class Serie {
     private Integer totalDeTemporadas;
     private Double evaluacion;
 
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Episodio> episodios;
 
     public Serie() {}
