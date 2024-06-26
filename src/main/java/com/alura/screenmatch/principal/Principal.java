@@ -122,7 +122,7 @@ public class Principal {
                 series = repositorio.findAll();
 
                 series.stream()
-                                .sorted(Comparator.comparing(Serie::getGenero));
-                                // .forEach(System.out::println);
+                                .sorted(Comparator.comparing(Serie::getGenero))
+                                .forEach(System.out::println);
         }
 }
