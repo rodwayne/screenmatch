@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.alura.screenmatch.model.Categoria;
 import com.alura.screenmatch.model.DatosSerie;
 import com.alura.screenmatch.model.DatosTemporadas;
 import com.alura.screenmatch.model.Episodio;
@@ -39,6 +40,7 @@ public class Principal {
                                         3- Historial de búsqueda
                                         4- Buscar serie por titulo
                                         5- Top 5 mejores series
+                                        6- Buscar series por categoria
 
                                         0- Salir
                                         """;
@@ -61,6 +63,9 @@ public class Principal {
                                         break;
                                 case 5:
                                         buscarTop5Series();
+                                        break;
+                                case 6:
+                                        buscarSeriesPorCategoria();
                                         break;
                                 case 0:
                                         System.out.println("Cerrando aplicación...");
@@ -150,5 +155,14 @@ public class Principal {
                 List<Serie> topSeries = repositorio.findTop5ByOrderByEvaluacionDesc();
                 topSeries.forEach(s -> System.out
                                 .println("Serie: " + s.getTitulo() + " Evaluacion: " + s.getEvaluacion()));
+        }
+
+        private void buscarSeriesPorCategoria() {
+                System.out.println("Escriba el genero/categoria: ");
+                var genero = teclado.nextLine();
+                var categoria = Categoria.fromEspanol(genero);
+                List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+                System.out.println("Las series de la categoría " + genero);
+                seriesPorCategoria.forEach(System.out::println);
         }
 }
