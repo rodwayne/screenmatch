@@ -41,6 +41,8 @@ public class Principal {
                                         4- Buscar serie por titulo
                                         5- Top 5 mejores series
                                         6- Buscar series por categoria
+                                        7- Filtrar series por temporada y evaluación
+                                        8- Buscar episodio por titulo
 
                                         0- Salir
                                         """;
@@ -69,6 +71,9 @@ public class Principal {
                                         break;
                                 case 7:
                                         filtrarSeriesPorTemporadaYEvaluacion();
+                                        break;
+                                case 8:
+                                        buscarEpisodioPorTitulo();
                                         break;
                                 case 0:
                                         System.out.println("Cerrando aplicación...");
@@ -176,8 +181,18 @@ public class Principal {
                 System.out.println("Evaluación de las series");
                 var evaluacion = teclado.nextDouble();
                 teclado.nextLine();
-                List<Serie> filtroSeries = repositorio.findByTotalDeTemporadasLessThanEqualAndEvaluacionGreaterThanEqual(totalTemporadas, evaluacion);
-                System.out.println("Series encontradas con máximo " + totalTemporadas + " temporadas y evaluación de " + evaluacion);
+                List<Serie> filtroSeries = repositorio.seriesPorTemporadaYEvaluacion(totalTemporadas, evaluacion);
+                System.out.println("Series encontradas con máximo " + totalTemporadas + " temporadas y evaluación de "
+                                + evaluacion);
                 filtroSeries.forEach(s -> System.out.println(s.getTitulo() + " - Evaluación: " + s.getEvaluacion()));
+        }
+
+        private void buscarEpisodioPorTitulo() {
+                System.out.println("Nombre del episodio:");
+                var nombreEpisodio = teclado.nextLine();
+                List<Episodio> episodiosEncontrados = repositorio.episodioPorNombre(nombreEpisodio);
+                episodiosEncontrados.forEach(
+                                e -> System.out.printf("Serie: %s Temporada %s Episodio %s Evaluacion %s\n",
+                                                e.getSerie().getTitulo(), e.getTemporada(), e.getNumeroEpisodio(), e.getEvaluacion()));
         }
 }
